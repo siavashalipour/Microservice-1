@@ -1,0 +1,7 @@
+applications:
+- name: Microservice1
+  memory: 256M
+  instances: 1
+  random-route: true
+  disk_quota: 1024M
+  buildpack: swift_buildpack
