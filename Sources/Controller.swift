@@ -47,7 +47,7 @@ public class Controller {
         
         router.get("/service", handler: { (request, response, next) in
 
-            let resource = HttpResource.init(schema: "https", host: "microservicetwo.mybluemix.net", port: nil, path: "/json")
+            let resource = HttpResource.init(schema: "https", host: "Microservice2.mybluemix.net", port: nil, path: "/json")
             HttpClient.get(resource: resource, headers: nil, completionHandler: { (erro, int, dic, data) in
                 let jsonResponse = JSON(data: data!)
                 response.status(HTTPStatusCode.OK).send(json: jsonResponse)
