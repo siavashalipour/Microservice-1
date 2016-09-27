@@ -57,6 +57,7 @@ public class Controller {
         })
         
         router.get("/dev", handler: getDev)
+        
     }
     
     public func getDev(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
