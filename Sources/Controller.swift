@@ -55,6 +55,17 @@ public class Controller {
 
             })
         })
+        
+        router.get("/dev", handler: getDev)
+    }
+    
+    public func getDev(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
+        Log.debug("GET - /json route handler...")
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        var jsonResponse = JSON([:])
+        jsonResponse["framework"].stringValue = "Microservice1-DEV"
+        jsonResponse["applicationName"].stringValue = "Microservice1-DEV"
+        try response.status(.OK).send(json: jsonResponse).end()
     }
     
     public func getHello(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
@@ -77,8 +88,8 @@ public class Controller {
         Log.debug("GET - /json route handler...")
         response.headers["Content-Type"] = "application/json; charset=utf-8"
         var jsonResponse = JSON([:])
-        jsonResponse["framework"].stringValue = "Microservice2"
-        jsonResponse["applicationName"].stringValue = "Microservice2"
+        jsonResponse["framework"].stringValue = "Microservice1"
+        jsonResponse["applicationName"].stringValue = "Microservice1"
         jsonResponse["company"].stringValue = "Siavash"
         jsonResponse["organization"].stringValue = "Swift @ Siavash"
         jsonResponse["location"].stringValue = "Sydney, NSW"
