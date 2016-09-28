@@ -35,7 +35,7 @@ public class Controller {
         
         // Serve static content from "public"
         router.all("/", middleware: StaticFileServer())
-        
+        router.all("/*", middleware: BodyParser())
         // Basic GET request
         router.get("/hello", handler: getHello)
         
@@ -58,6 +58,37 @@ public class Controller {
         
         router.get("/dev", handler: getDev)
         router.get("/master", handler: getMaster)
+        router.post("/addtodb", handler: postToDB)
+    }
+    
+    public func postToDB(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
+        Log.debug("POST - /addtodb route handler...")
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        var jsonResponse = JSON([:])
+        if let body = request.body {
+            switch body {
+            case .json(let json):
+                let fname = json["fname"].stringValue
+                let lname = json["lname"].stringValue
+                do {
+                    if try ProfileDatabase().addToDB(fname: fname, lname: lname) {
+                        jsonResponse["message"].stringValue = "Success"
+                        try response.status(.OK).send(json: jsonResponse).end()
+                    } else {
+                        jsonResponse["message"].stringValue = "Fail"
+                        try response.status(.methodFailure).send(json: jsonResponse).end()
+                    }
+
+                } catch let error {
+                    jsonResponse["message"].stringValue = error.localizedDescription
+                    try response.status(.methodFailure).send(json: jsonResponse).end()
+                }
+            default:
+                break
+            }
+        }
+        jsonResponse["message"].stringValue = "Empty Body"
+        try response.status(.badRequest).send(json: jsonResponse).end()
     }
     
     public func getMaster(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) throws {
