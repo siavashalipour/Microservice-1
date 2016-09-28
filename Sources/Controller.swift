@@ -79,8 +79,8 @@ public class Controller {
                         try response.status(.methodFailure).send(json: jsonResponse).end()
                     }
 
-                } catch let error {
-                    jsonResponse["message"].stringValue = error.localizedDescription
+                } catch DBError.fileError(let s) {
+                    jsonResponse["message"].stringValue = s
                     try response.status(.methodFailure).send(json: jsonResponse).end()
                 }
             default:

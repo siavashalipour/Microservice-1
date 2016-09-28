@@ -10,7 +10,7 @@ import Foundation
 import PostgreSQL
 
 enum DBError: Error {
-    case fileError(Int, description: String)
+    case fileError(String)
 }
 struct ProfileDatabase {
     
@@ -34,7 +34,7 @@ struct ProfileDatabase {
         }
         
         guard pgsl.status() != .bad else {
-            throw DBError.fileError(500, description: "Internal Server Error - failed to connect to db")
+            throw DBError.fileError("Internal Server Error - failed to connect to db")
         }
         
         let query: String = "INSERT INTO account (fname, lname) VALUES ('\(fname)','\(lname)');"
@@ -42,7 +42,7 @@ struct ProfileDatabase {
         let queryResult = pgsl.exec(statement: query)
         
         guard queryResult.status() == .commandOK else {
-            throw DBError.fileError(500, description: "Internal Server Error - db query error")
+            throw DBError.fileError("Internal Server Error - db query error")
         }
         
         return true
