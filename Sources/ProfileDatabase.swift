@@ -14,10 +14,10 @@ enum DBError: Error {
 }
 struct ProfileDatabase {
     
-    let dbHost = "localhost"
-    let dbName = "profile"
-    let dbUsername = "siavashabbasalipour"
-    let dbPassword = ""
+    let dbHost = "sl-us-dal-9-portal.3.dblayer.com"
+    let dbName = "compose"
+    let dbUsername = "admin"
+    let dbPassword = "QZKXGSDVRFDSKZNQ"
     
     init() {
         
@@ -27,8 +27,8 @@ struct ProfileDatabase {
         
         //open postgre db
         let pgsl = PostgreSQL.PGConnection()
-        _ = pgsl.connectdb("host='\(dbHost)' dbname='\(dbName)' user='\(dbUsername)' password='\(dbPassword)'")
-
+        _ = pgsl.connectdb("host='\(dbHost)' port='\(15348)' dbname='\(dbName)' user='\(dbUsername)' password='\(dbPassword)'")
+        
         defer {
             pgsl.close()
         }
