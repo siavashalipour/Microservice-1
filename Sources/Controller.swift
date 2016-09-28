@@ -34,7 +34,7 @@ public class Controller {
         router = Router()
         
         // Serve static content from "public"
-        router.all("/", middleware: StaticFileServer())
+        //router.all("/", middleware: StaticFileServer())
         router.all("/*", middleware: BodyParser())
         // Basic GET request
         router.get("/hello", handler: getHello)

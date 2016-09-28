@@ -37,25 +37,15 @@ struct ProfileDatabase {
             throw DBError.fileError(500, description: "Internal Server Error - failed to connect to db")
         }
         
-        let query: String = "INSERT INTO account (fname, lname) VALUES ('\(fname)','\(lname)')"
+        let query: String = "INSERT INTO account (fname, lname) VALUES ('\(fname)','\(lname)');"
         //execute query
         let queryResult = pgsl.exec(statement: query)
         
-        guard queryResult.status() == .commandOK || queryResult.status() == .tuplesOK else {
+        guard queryResult.status() == .commandOK else {
             throw DBError.fileError(500, description: "Internal Server Error - db query error")
         }
         
-        guard case let numberOfFields = queryResult.numFields() , numberOfFields != 0 else {
-            throw DBError.fileError(500, description: "Internal Server Error - db returned nothing")
-        }
-
-        guard case let numberOfRows = queryResult.numTuples() , numberOfRows != 0 else {
-            throw DBError.fileError(204, description: "Internal Server Error - query returned empty result")
-        }
         return true
-        
-//        INSERT INTO films (code, title, did, date_prod, kind)
-//        VALUES ('T_601', 'Yojimbo', 106, '1961-06-16', 'Drama');
     }
     
 }
