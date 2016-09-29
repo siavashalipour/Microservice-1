@@ -18,7 +18,7 @@ struct ProfileDatabase {
     let dbName = "compose"
     let dbUsername = "admin"
     let dbPassword = "QZKXGSDVRFDSKZNQ"
-    
+    let dbPort = 15348
     init() {
         
     }
@@ -27,7 +27,7 @@ struct ProfileDatabase {
         
         //open postgre db
         let pgsl = PostgreSQL.PGConnection()
-        _ = pgsl.connectdb("host='\(dbHost)' port='\(15348)' dbname='\(dbName)' user='\(dbUsername)' password='\(dbPassword)'")
+        _ = pgsl.connectdb("host='\(dbHost)' port='\(dbPort)' dbname='\(dbName)' user='\(dbUsername)' password='\(dbPassword)'")
         
         defer {
             pgsl.close()
